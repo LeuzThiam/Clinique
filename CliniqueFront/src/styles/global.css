@@ -1,0 +1,30 @@
+.hover-bg:hover {
+  background: #f7faff !important;
+}
+.nav-scroller {
+  scrollbar-width: thin;
+  scrollbar-color: #e5e9f0 #fff;
+}
+.nav-scroller::-webkit-scrollbar {
+  height: 6px;
+}
+.nav-scroller::-webkit-scrollbar-thumb {
+  background: #e5e9f0;
+  border-radius: 8px;
+}
+.nav-scroller::-webkit-scrollbar-track {
+  background: #fff;
+}
+@media (max-width: 991.98px) {
+  .nav-scroller {
+    overflow-x: unset !important;
+  }
+}
+.dropdown-menu {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08) !important;
+  scrollbar-width: none;
+}
+.dropdown-menu::-webkit-scrollbar {
+  width: 0 !important;
+  background: transparent;
+}

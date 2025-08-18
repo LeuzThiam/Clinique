@@ -1,0 +1,10 @@
+.prescription-card {
+  border-radius: 18px;
+  transition: box-shadow 0.16s, border-color 0.18s;
+}
+.prescription-card:hover {
+  box-shadow: 0 4px 22px #1270ec0a, 0 1.5px 8px #1270ec12;
+  border-color: #1270ec30;
+}
+
+/* Modal est déjà bien stylé via Bootstrap. */

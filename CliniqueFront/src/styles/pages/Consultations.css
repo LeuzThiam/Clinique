@@ -1,0 +1,21 @@
+/* Cards et couleurs personnalisées */
+.consultation-card {
+  border-radius: 18px;
+  transition: box-shadow 0.16s;
+}
+.consultation-card:hover {
+  box-shadow: 0 4px 22px #1270ec0a, 0 1.5px 8px #1270ec12;
+  border-color: #1270ec30;
+}
+
+/* Modal Bootstrap-like (déjà intégré en JS inline pour l'overlay) */
+
+/* Optionnel : petit plus pour les boutons "link" dans la liste */
+.btn-link {
+  color: #1270ec;
+  text-decoration: none;
+}
+.btn-link:hover, .btn-link:focus {
+  color: #0c56b1;
+  background: #f3f8ff;
+}

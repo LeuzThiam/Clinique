@@ -1,0 +1,28 @@
+/* Pour customiser les cards statistiques ou le Dashboard */
+/* Ici tu ajoutes juste ce que tu veux pour peaufiner (sinon c'est Bootstrap qui gère) */
+
+.card-stat-boostrap {
+  transition: box-shadow 0.15s;
+}
+.card-stat-boostrap:hover {
+  box-shadow: 0 4px 28px rgba(67,97,238,0.13);
+}
+
+.status-dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+/* Responsive si besoin */
+@media (max-width: 767px) {
+  .dashboard-bootstrap {
+    padding: 1rem !important;
+  }
+}

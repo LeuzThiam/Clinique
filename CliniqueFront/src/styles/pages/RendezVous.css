@@ -1,0 +1,29 @@
+/* RV : aucun style custom obligatoire, tout est déjà responsive via Bootstrap.
+   MAIS tu peux personnaliser le badge statut, les modals, ou autre ici. */
+
+/* Par exemple, un style optionnel pour différencier les badges */
+.badge.bg-warning {
+  background-color: #ffef96 !important;
+  color: #996800 !important;
+}
+.badge.bg-success {
+  background-color: #32cd80 !important;
+}
+.badge.bg-danger {
+  background-color: #fd6d5a !important;
+}
+.badge.bg-primary {
+  background-color: #1270ec !important;
+}
+.badge.bg-secondary {
+  background-color: #bfc8e3 !important;
+}
+
+/* Optionnel : card RV plus douce au hover */
+.card:hover {
+  box-shadow: 0 4px 22px #1270ec0a, 0 1.5px 8px #1270ec0f;
+  border-color: #1270ec20;
+}
+
+/* Modal BG fondu (déjà appliqué inline dans le composant) */
+/* Rien d'autre de nécessaire ici, Bootstrap s'occupe du reste ! */

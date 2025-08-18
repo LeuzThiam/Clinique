@@ -1,0 +1,16 @@
+.card {
+  border-radius: 18px;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.modal-content {
+  border-radius: 18px;
+  box-shadow: 0 8px 32px #1270ec0d, 0 1.5px 8px #1270ec20;
+}
+
+.btn-primary {
+  border-radius: 8px;
+}

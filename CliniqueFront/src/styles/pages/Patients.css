@@ -1,0 +1,13 @@
+.avatar-patient {
+  width: 48px;
+  height: 48px;
+  font-size: 22px;
+  background: #1270ec22;
+  color: #1270ec;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 8px #1270ec08;
+}
