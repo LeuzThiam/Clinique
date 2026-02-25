@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  # Backend Django
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: clinique-backend
+    command: >
+      sh -c "python clinique/manage.py migrate &&
+             gunicorn clinique.wsgi:application --bind 0.0.0.0:8000"
+    environment:
+      - DEBUG=False
+      - ALLOWED_HOSTS=localhost,127.0.0.1
+      - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./clinique:/app
+    depends_on:
+      - db
+    networks:
+      - clinique-network
+
+  # Frontend React
+  frontend:
+    build:
+      context: ./CliniqueFront
+      dockerfile: Dockerfile
+    container_name: clinique-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./CliniqueFront:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    networks:
+      - clinique-network
+    depends_on:
+      - backend
+
+  # Base de données PostgreSQL (optionnel)
+  db:
+    image: postgres:15-alpine
+    container_name: clinique-db
+    environment:
+      - POSTGRES_DB=clinique
+      - POSTGRES_USER=clinique_user
+      - POSTGRES_PASSWORD=clinique_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - clinique-network
+
+  # Nginx (reverse proxy - optionnel)
+  nginx:
+    image: nginx:alpine
+    container_name: clinique-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - clinique-network
+
+volumes:
+  postgres_data:
+
+networks:
+  clinique-network:
+    driver: bridge
