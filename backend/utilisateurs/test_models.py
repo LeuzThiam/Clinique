@@ -18,7 +18,10 @@ class TestUserModel:
         user = User.objects.create_user(
             username='testuser',
             email='test@example.com',
-            password='Secure@1234567'
+            password='Secure@1234567',
+            role='assistant',
+            adresse='123 Rue Test',
+            numero_telephone='5551234567',
         )
         assert user.username == 'testuser'
         assert user.email == 'test@example.com'
@@ -31,7 +34,10 @@ class TestUserModel:
         admin = User.objects.create_superuser(
             username='admin',
             email='admin@example.com',
-            password='Secure@1234567'
+            password='Secure@1234567',
+            role='assistant',
+            adresse='1 Admin Street',
+            numero_telephone='5550000000',
         )
         assert admin.username == 'admin'
         assert admin.is_staff
@@ -39,7 +45,7 @@ class TestUserModel:
 
     def test_user_string_representation(self, test_user):
         """Test user string representation"""
-        assert str(test_user) == 'testuser'
+        assert 'Assistant' in str(test_user)
 
 
 @pytest.mark.unit
@@ -48,19 +54,19 @@ class TestUserViews:
 
     def test_list_users_authenticated(self, authenticated_client):
         """Test listing users as authenticated user"""
-        url = reverse('user-list')
+        url = reverse('utilisateur-list')
         response = authenticated_client.get(url)
         assert response.status_code in [status.HTTP_200_OK, status.HTTP_401_UNAUTHORIZED]
 
     def test_list_users_unauthenticated(self, api_client):
         """Test listing users as unauthenticated user"""
-        url = reverse('user-list')
+        url = reverse('utilisateur-list')
         response = api_client.get(url)
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_create_user(self, db, api_client):
         """Test creating a new user"""
-        url = reverse('user-list')
+        url = reverse('utilisateur-list')
         data = {
             'username': 'newuser',
             'email': 'newuser@example.com',

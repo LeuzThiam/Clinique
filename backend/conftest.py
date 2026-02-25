@@ -22,7 +22,10 @@ def authenticated_client(db):
     user = User.objects.create_user(
         username='testuser',
         email='testuser@example.com',
-        password='Test@1234567890'
+        password='Test@1234567890',
+        role='assistant',
+        adresse='123 Rue Test',
+        numero_telephone='5551234567',
     )
     
     # Generate JWT tokens
@@ -38,7 +41,10 @@ def test_user(db):
     return User.objects.create_user(
         username='testuser',
         email='testuser@example.com',
-        password='Test@1234567890'
+        password='Test@1234567890',
+        role='assistant',
+        adresse='123 Rue Test',
+        numero_telephone='5551234567',
     )
 
 
@@ -48,7 +54,10 @@ def admin_user(db):
     return User.objects.create_superuser(
         username='admin',
         email='admin@example.com',
-        password='Admin@1234567890'
+        password='Admin@1234567890',
+        role='assistant',
+        adresse='1 Admin Street',
+        numero_telephone='5550000000',
     )
 
 
@@ -59,7 +68,10 @@ def admin_client(db):
     admin = User.objects.create_superuser(
         username='admin',
         email='admin@example.com',
-        password='Admin@1234567890'
+        password='Admin@1234567890',
+        role='assistant',
+        adresse='1 Admin Street',
+        numero_telephone='5550000000',
     )
     
     refresh = RefreshToken.for_user(admin)
