@@ -1,354 +1,82 @@
-# Guide de Contribution - Clinique
+# Contributing
 
-Merci de votre intérêt pour contribuer à **Clinique**! Ce document explique comment bien contribuer au projet.
+Want to contribute? Great!
 
-## 📋 Table des matières
+## Quick Guidelines
 
-- [Code de Conduite](#Code-de-Conduite)
-- [Processus de Contribution](#Processus-de-Contribution)
-- [Git Flow](#Git-Flow)
-- [Standards de Code](#Standards-de-Code)
-- [Commit Messages](#Commit-Messages)
-- [Pull Requests](#Pull-Requests)
-- [Reporting des Bugs](#Reporting-des-Bugs)
-- [Suggestions de Features](#Suggestions-de-Features)
-
-## 📜 Code de Conduite
-
-- Soyez respectueux et inclusif
-- Maintenez un environnement professionnel
-- Acceptez les critiques constructives
-- Focalisez-vous sur le projet, pas sur la personne
-
-## 🚀 Processus de Contribution
-
-### 1. Fork et Clone
-
-```bash
-# Fork le repo sur GitHub
-git clone https://github.com/votre-username/Clinique.git
-cd Clinique
-git remote add upstream https://github.com/LeuzThiam/Clinique.git
-```
-
-### 2. Créer une Branche
-
-**Utilisez un nommage clair et descriptif:**
-
-```bash
-# Feature
-git checkout -b feature/add-patient-search
-
-# Bug fix
-git checkout -b fix/login-error-handling
-
-# Refactoring
-git checkout -b refactor/optimize-api-endpoints
-
-# Documentation
-git checkout -b docs/improve-api-readme
-```
-
-### 3. Développer et Tester
-
-```bash
-# Assurez-vous que tout fonctionne
-python manage.py runserver  # Backend
-npm run dev                 # Frontend
-
-# Lancer les tests
-python manage.py test       # Backend
-npm run test               # Frontend
-```
-
-### 4. Commit et Push
-
-```bash
-git add .
-git commit -m "feat: add patient search by name"
-git push origin feature/add-patient-search
-```
-
-### 5. Créer une Pull Request
-
-- Décrivez clairement vos changements
-- Référencez les issues connexes
-- Assurez-vous que tous les tests passent
-
-## 🔄 Git Flow
-
-### Branch Strategy
-
-```
-main (production)
-│
-├── develop (intégration)
-│   ├── feature/xyz
-│   ├── fix/bug-name
-│   └── refactor/optimization
-```
-
-### Workflow
-
-1. **Créer une branche** depuis `develop`
-2. **Développer** votre feature
-3. **Merger** dans `develop` via Pull Request
-4. **Tester** en staging
-5. **Merger** dans `main` pour production
-
-## 💻 Standards de Code
-
-### Backend (Python)
-
-**Conventions:**
-- Suivre [PEP 8](https://www.python.org/dev/peps/pep-0008/)
-- Nommer les variables en `snake_case`
-- Nommer les classes en `PascalCase`
-- Utiliser des docstrings pour toutes les fonctions/classes
-
-**Exemple:**
-```python
-def get_patient_by_id(patient_id):
-    """
-    Récupérer un patient par son ID.
-    
-    Args:
-        patient_id: L'ID du patient
-        
-    Returns:
-        Patient object ou None
-    """
-    return Patient.objects.get(id=patient_id)
-```
-
-**Formate le code:**
-```bash
-# Formater avec Black
-black .
-
-# Vérifier avec Flake8
-flake8 .
-
-# Organiser les imports
-isort .
-```
-
-### Frontend (React/JavaScript)
-
-**Conventions:**
-- Suivre [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
-- Nommer les composants en `PascalCase`
-- Nommer les fonctions/variables en `camelCase`
-- Utiliser des JSDoc pour les composants
-
-**Exemple:**
-```javascript
-/**
- * Affiche les détails d'un patient
- * @param {Object} patient - Les données du patient
- * @returns {JSX.Element}
- */
-function PatientDetails({ patient }) {
-  return (
-    <div className="patient-details">
-      <h1>{patient.name}</h1>
-    </div>
-  );
-}
-```
-
-**Linter:**
-```bash
-npm run lint
-```
-
-## 📝 Commit Messages
-
-### Format
-
-```
-<type>(<scope>): <subject>
-
-<body>
-
-<footer>
-```
-
-### Types
-
-- **feat**: Une nouvelle fonctionnalité
-- **fix**: Une correction de bug
-- **docs**: Changements de documentation
-- **style**: Formatage de code (pas de changement logique)
-- **refactor**: Refactorisation de code
-- **perf**: Amélioration de performance
-- **test**: Ajout ou modification de tests
-- **chore**: Changements de configuration/dépendances
-- **ci**: Changements CI/CD
-
-### Exemples
-
-```bash
-# Bons exemples
-git commit -m "feat(auth): add JWT token refresh endpoint"
-git commit -m "fix(patients): resolve duplicate patient creation bug"
-git commit -m "docs: add API authentication guide"
-git commit -m "refactor(consultations): simplify date handling"
-
-# Mauvais exemples
-git commit -m "fix stuff"
-git commit -m "updated code"
-git commit -m "WIP"
-```
-
-## 🔀 Pull Requests
-
-### Before Submitting
-
-1. **Mettez à jour depuis `develop`:**
+1. **Fork & Clone**
    ```bash
-   git fetch upstream
-   git rebase upstream/develop
+   git clone https://github.com/YOUR_USERNAME/Clinique.git
    ```
 
-2. **Lancer les tests:**
+2. **Create a Branch**
    ```bash
-   # Backend
-   python manage.py test
-   
-   # Frontend
-   npm run test
+   git checkout -b feature/your-feature-name
+   git checkout -b fix/bug-name
    ```
 
-3. **Vérifier le linting:**
+3. **Make Changes & Test**
    ```bash
-   # Backend
-   black . && flake8 .
-   
-   # Frontend
-   npm run lint
+   make lint
+   make test
    ```
 
-### PR Description Template
+4. **Commit with Clear Message**
+   ```bash
+   git commit -m "feat: add patient search feature"
+   git commit -m "fix: resolve login timeout issue"
+   git commit -m "refactor: simplify API endpoints"
+   ```
 
-```markdown
-## Description
-[Décrivez brièvement vos changements]
+5. **Push & Create PR**
+   ```bash
+   git push origin feature/your-feature-name
+   ```
 
-## Type de changement
-- [ ] Bug fix
-- [ ] Nouvelle feature
-- [ ] Breaking change
-- [ ] Documentation
+## Branch Naming
 
-## Issues connexes
-Fixes #[numéro du ticket]
+- `feature/name` - New features
+- `fix/name` - Bug fixes
+- `refactor/name` - Code refactoring
+- `docs/name` - Documentation
 
-## Changements
-- [Changement 1]
-- [Changement 2]
+## Commit Format
+
+```
+type: short description
+
+Optional longer description
+```
+
+Types: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`
+
+## Code Quality
+
+Before committing:
+```bash
+make format-backend    # Format Python
+make format-frontend   # Format JavaScript
+make lint              # Check quality
+```
 
 ## Testing
-- [ ] Tests unitaires passent
-- [ ] Tests d'intégration passent
-- [ ] Testé manuellement
 
-## Screenshots (si applicable)
-[Ajouter des screenshots]
-
-## Checklist
-- [ ] Le code suit les standards du projet
-- [ ] J'ai fait des self-review
-- [ ] Les commentaires sont clairs
-- [ ] La documentation est à jour
-- [ ] Pas de breaking changes
+```bash
+make test              # Run all tests
 ```
 
-## 🐛 Reporting des Bugs
+## Need Help?
 
-### Avant de signaler
+- Check existing [Issues](https://github.com/LeuzThiam/Clinique/issues)
+- Open a new issue with details
+- Describe the problem and what you tried
 
-1. Vérifiez que le bug n'existe pas déjà
-2. Vérifiez que votre environnement est à jour
-3. Testez avec les dernières versions des dépendances
+## Standards
 
-### Issue Template
+- Keep commits small and focused
+- Write clear commit messages
+- Test your changes
+- Update docs if needed
+- Be respectful and constructive
 
-```markdown
-## Description du bug
-[Décrivez le bug]
-
-## Étapes de reproduction
-1. ...
-2. ...
-3. ...
-
-## Comportement attendu
-[Décrivez le comportement attendu]
-
-## Comportement actuel
-[Décrivez ce qui se passe actuellement]
-
-## Screenshots
-[Si applicable]
-
-## Environnement
-- OS: [Windows/macOS/Linux]
-- Python: [version]
-- Node: [version]
-- Django: [version]
-```
-
-## 💡 Suggestions de Features
-
-### Bonnes suggestions
-
-- Soyez spécifique
-- Expliquez l'use case
-- Fournissez des exemples
-- Référencez les discussions existantes
-
-### Feature Request Template
-
-```markdown
-## Description du feature
-[Décrivez la fonctionnalité]
-
-## Use case
-[Pourquoi avez-vous besoin de cette feature?]
-
-## Solution proposée
-[Comment devrait-elle fonctionner?]
-
-## Alternatives
-[Alternatives envisagées]
-
-## Ressources additionnelles
-[Liens, références, etc.]
-```
-
-## ⚡ Conseils Rapides
-
-✅ **À FAIRE:**
-- Faire de petits commits
-- Écrire des messages clairs
-- Tester vos changements
-- Maintenir la cohérence du code
-- Documenter les changements importants
-
-❌ **À ÉVITER:**
-- Commits volumineux
-- Merges forcées
-- Code non commenté
-- Ignorer les tests
-- Pusher directement sur main
-
-## 🆘 Besoin d'aide?
-
-- Consultez le [README.md](./README.md)
-- Ouvrez une [Discussion](https://github.com/LeuzThiam/Clinique/discussions)
-- Demandez dans les commentaires du PR
-
----
-
-**Merci de contribuer à Clinique! 🎉**
+That's it! Thanks for contributing 🚀
