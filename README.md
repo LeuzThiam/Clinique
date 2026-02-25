@@ -2,6 +2,29 @@
 
 Medical clinic management system. Django backend + React frontend.
 
+[![GitHub License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Backend Tests](https://github.com/modou/clinique/actions/workflows/backend_tests.yml/badge.svg)](https://github.com/modou/clinique/actions/workflows/backend_tests.yml)
+[![Frontend Tests](https://github.com/modou/clinique/actions/workflows/frontend_tests.yml/badge.svg)](https://github.com/modou/clinique/actions/workflows/frontend_tests.yml)
+[![Security Scanning](https://github.com/modou/clinique/actions/workflows/security-scanning.yml/badge.svg)](https://github.com/modou/clinique/actions/workflows/security-scanning.yml)
+[![Python 3.13+](https://img.shields.io/badge/Python-3.13+-blue.svg)](https://www.python.org/)
+[![Node 20+](https://img.shields.io/badge/Node-20+-green.svg)](https://nodejs.org/)
+[![Code style: black](https://img.shields.io/badge/Code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://www.conventionalcommits.org/)
+
+## 📋 Table of Contents
+
+- [Quick Start](#quick-start)
+- [Features](#features)
+- [Tech Stack](#stack)
+- [Project Structure](#project-structure)
+- [Setup](#setup-environment-variables)
+- [Development](#available-commands)
+- [Testing](#testing)
+- [Contributing](./CONTRIBUTING.md)
+- [Roadmap](./ROADMAP.md)
+- [Changelog](./CHANGELOG.md)
+- [License](#license)
+
 ## Quick Start
 
 ### Backend
@@ -51,6 +74,7 @@ Go to the admin panel at http://localhost:8000/admin/
 - **Backend**: Django 5.2, DRF, JWT
 - **Frontend**: React 19, Vite, Tailwind
 - **Database**: SQLite (dev), PostgreSQL (prod)
+- **DevOps**: Docker, GitHub Actions, Pre-commit hooks
 
 ## Project Structure
 
