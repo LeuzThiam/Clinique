@@ -103,6 +103,20 @@ test-frontend:
 	@echo "Running React tests..."
 	cd CliniqueFront && npm run test
 
+test-watch:
+	@echo "Running Django tests in watch mode..."
+	cd clinique && pytest-watch
+
+# Pre-commit
+pre-commit-install:
+	pre-commit install
+
+pre-commit-run:
+	pre-commit run --all-files
+
+pre-commit-uninstall:
+	pre-commit uninstall
+
 # Docker
 docker-build:
 	docker-compose build
