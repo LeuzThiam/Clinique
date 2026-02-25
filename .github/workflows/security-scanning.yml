@@ -55,7 +55,7 @@ jobs:
           safety check --json > safety-report.json || true
 
       - name: Upload safety report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: safety-report
           path: safety-report.json
@@ -78,7 +78,7 @@ jobs:
           bandit -r clinique -f json -o bandit-report.json || true
 
       - name: Upload bandit report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: bandit-report
           path: bandit-report.json
@@ -106,7 +106,7 @@ jobs:
         run: npm audit --json > npm-audit.json || true
 
       - name: Upload npm audit report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: npm-audit-report
           path: CliniqueFront/npm-audit.json
