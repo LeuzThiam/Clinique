@@ -72,7 +72,7 @@ export default function Register() {
         <form onSubmit={handleSubmit} autoComplete="on">
           {/* Champ identifiant utilisateur */}
           <div className="mb-3">
-            <label className="form-label fw-semibold">Nom d'utilisateur</label>
+            <label className="form-label fw-semibold">Nom d&apos;utilisateur</label>
             <input
               className="form-control"
               type="text"
@@ -202,7 +202,7 @@ export default function Register() {
             type="submit"
             className="btn btn-success w-100 fw-semibold"
           >
-            S'inscrire
+            S&apos;inscrire
           </button>
         </form>
         {/* Lien vers la page connexion */}

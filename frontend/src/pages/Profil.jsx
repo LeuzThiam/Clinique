@@ -91,29 +91,29 @@ export default function Profil() {
             </Col>
             <Col md={8}>
               <Row className="mb-2">
-                <Col sm={5} className="fw-semibold text-muted">Nom d'utilisateur :</Col>
+                <Col sm={5} className="fw-semibold text-muted">Nom d&apos;utilisateur :</Col>
                 <Col>{profil.username}</Col>
               </Row>
               <Row className="mb-2">
-                <Col sm={5} className="fw-semibold text-muted">Email :</Col>
+                <Col sm={5} className="fw-semibold text-muted">Email :</Col>
                 <Col>{profil.email}</Col>
               </Row>
               <Row className="mb-2">
-                <Col sm={5} className="fw-semibold text-muted">Téléphone :</Col>
+                <Col sm={5} className="fw-semibold text-muted">Téléphone :</Col>
                 <Col>{profil.numero_telephone || <span className="text-muted">—</span>}</Col>
               </Row>
               <Row className="mb-2">
-                <Col sm={5} className="fw-semibold text-muted">Adresse :</Col>
+                <Col sm={5} className="fw-semibold text-muted">Adresse :</Col>
                 <Col>{profil.adresse || <span className="text-muted">—</span>}</Col>
               </Row>
               {profil.role === 'medecin' && (
                 <Row className="mb-2">
-                  <Col sm={5} className="fw-semibold text-muted">Spécialité :</Col>
+                  <Col sm={5} className="fw-semibold text-muted">Spécialité :</Col>
                   <Col>{profil.specialite || <span className="text-muted">—</span>}</Col>
                 </Row>
               )}
               <Row className="mb-2">
-                <Col sm={5} className="fw-semibold text-muted">Statut :</Col>
+                <Col sm={5} className="fw-semibold text-muted">Statut :</Col>
                 <Col>{profil.is_active ? <span className="text-success">Actif</span> : <span className="text-danger">Inactif</span>}</Col>
               </Row>
             </Col>
