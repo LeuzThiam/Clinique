@@ -2,27 +2,27 @@ import api from './api'
 
 
 export const addSession = (data) => {
-  return api.post('session/', data)
+  return api.post('session/sessions/', data)
 }
 
 
 export const getsession = () => {
-  return api.get('session/')
+  return api.get('session/sessions/')
 }
 
 
 export const getSessionById = (id) => {
-  return api.get(`session/${id}/`)
+  return api.get(`session/sessions/${id}/`)
 }
 
 
 export const updateSession = (id, data) => {
-  return api.put(`session/${id}/`, data)
+  return api.put(`session/sessions/${id}/`, data)
 }
 
 
 export const deleteSession = (id) => {
-  return api.delete(`session/${id}/`)
+  return api.delete(`session/sessions/${id}/`)
 }
 
 
