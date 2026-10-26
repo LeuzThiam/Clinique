@@ -24,8 +24,8 @@ export default function DossierMedical() {
   const [toDelete, setToDelete] = useState(null);
 
   const refreshData = () => {
-    getDossiers().then(res => setDossiers(res.data)).catch(console.error);
-    getPatients().then(res => setPatients(res.data)).catch(console.error);
+    getDossiers().then(res => setDossiers(res.data?.results ?? res.data ?? [])).catch(console.error);
+    getPatients().then(res => setPatients(res.data?.results ?? res.data ?? [])).catch(console.error);
   };
 
   useEffect(refreshData, []);

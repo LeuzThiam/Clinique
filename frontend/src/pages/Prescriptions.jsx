@@ -41,8 +41,8 @@ export default function Prescriptions() {
   }
 
   const refreshData = () => {
-    api.get("prescriptions/").then(res => setPrescriptions(res.data)).catch(console.error);
-    api.get("consultations/").then(res => setConsultations(res.data)).catch(console.error);
+    api.get("prescriptions/").then(res => setPrescriptions(res.data?.results ?? res.data ?? [])).catch(console.error);
+    api.get("consultations/").then(res => setConsultations(res.data?.results ?? res.data ?? [])).catch(console.error);
   };
   useEffect(refreshData, []);
 

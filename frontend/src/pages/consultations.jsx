@@ -30,12 +30,14 @@ export default function Consultations() {
   const medecinId = localStorage.getItem("user_id");
 
   // Chargement des données
+  const asList = (data) => (Array.isArray(data) ? data : (data?.results ?? []));
+
   const refreshData = () => {
-    api.get('consultations/').then(res => Array.isArray(res.data) ? setConsultations(res.data) : setConsultations([]));
-    api.get('dossiers-medicaux/').then(res => Array.isArray(res.data) ? setDossiers(res.data) : setDossiers([]));
-    api.get('rendezvous/').then(res => Array.isArray(res.data) ? setRendezVous(res.data) : setRendezVous([]));
-    api.get('utilisateurs/medecins/').then(res => Array.isArray(res.data) ? setMedecins(res.data) : setMedecins([]));
-    api.get('patients/').then(res => Array.isArray(res.data) ? setPatients(res.data) : setPatients([]));
+    api.get('consultations/').then(res => setConsultations(asList(res.data)));
+    api.get('dossiers-medicaux/').then(res => setDossiers(asList(res.data)));
+    api.get('rendezvous/').then(res => setRendezVous(asList(res.data)));
+    api.get('utilisateurs/medecins/').then(res => setMedecins(asList(res.data)));
+    api.get('patients/').then(res => setPatients(asList(res.data)));
   };
   useEffect(refreshData, []);
 

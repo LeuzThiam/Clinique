@@ -67,9 +67,9 @@ export default function RendezVous() {
   };
 
   const refreshData = () => {
-    getRendezVous().then(res => setRendezVous(res.data)).catch(console.error);
-    getPatients().then(res => setPatients(res.data)).catch(console.error);
-    getMedecins().then(res => setMedecins(res.data)).catch(console.error);
+    getRendezVous().then(res => setRendezVous(res.data?.results ?? res.data ?? [])).catch(console.error);
+    getPatients().then(res => setPatients(res.data?.results ?? res.data ?? [])).catch(console.error);
+    getMedecins().then(res => setMedecins(res.data?.results ?? res.data ?? [])).catch(console.error);
   };
   useEffect(() => { refreshData(); }, []);
 

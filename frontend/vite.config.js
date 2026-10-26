@@ -8,5 +8,8 @@ export default defineConfig({
     host: true,
     port: 5173,
     allowedHosts: ['63796412ecab.ngrok-free.app'], // autoriser l'URL ngrok
+    watch: {
+      usePolling: true,
+    },
   },
 })

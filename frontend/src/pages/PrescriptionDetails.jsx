@@ -28,9 +28,9 @@ export default function PrescriptionDetails() {
   const medecinId = getMedecinId();
 
   useEffect(() => {
-    api.get("prescriptions/").then(res => setPrescriptions(res.data));
-    api.get("consultations/").then(res => setConsultations(res.data));
-    api.get("prescription-details/").then(res => setDetails(res.data));
+    api.get("prescriptions/").then(res => setPrescriptions(res.data?.results ?? res.data ?? []));
+    api.get("consultations/").then(res => setConsultations(res.data?.results ?? res.data ?? []));
+    api.get("prescription-details/").then(res => setDetails(res.data?.results ?? res.data ?? []));
   }, [modalVisible]);
 
   const getConsultationByPrescription = (p) => {

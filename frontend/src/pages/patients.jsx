@@ -31,7 +31,7 @@ export default function Patients() {
   // Charge les patients au chargement du composant
   const refreshPatients = () =>
     getPatients()
-      .then((res) => setPatients(res.data))
+      .then((res) => setPatients(res.data?.results ?? res.data ?? []))
       .catch((err) => console.error("Erreur chargement patients :", err));
 
   useEffect(() => {
