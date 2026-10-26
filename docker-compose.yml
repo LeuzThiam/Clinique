@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: clinique-db
+    environment:
+      - POSTGRES_DB=${DB_NAME:-clinique}
+      - POSTGRES_USER=${DB_USER:-clinique_user}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-clinique_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - clinique-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-clinique_user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Django Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: clinique-backend
+    environment:
+      - DEBUG=${DEBUG:-True}
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-key-change-in-production}
+      - ALLOWED_HOSTS=localhost,127.0.0.1,backend
+      - CORS_ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=${DB_NAME:-clinique}
+      - DB_USER=${DB_USER:-clinique_user}
+      - DB_PASSWORD=${DB_PASSWORD:-clinique_password}
+      - DB_HOST=db
+      - DB_PORT=5432
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - clinique-network
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: clinique-frontend
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - clinique-network
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+
+networks:
+  clinique-network:
+    driver: bridge
