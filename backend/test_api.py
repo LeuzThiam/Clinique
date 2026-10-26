@@ -1,9 +1,9 @@
 import pytest
-from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from patients.models import Patient
+from dossiers_medical.models import DossierMedical
 from utilisateurs.models import Medecin
 from consultations.models import Consultation
 
@@ -15,29 +15,22 @@ def api_client():
 
 
 @pytest.fixture
-def user():
-    """Create a test user."""
-    return User.objects.create_user(
+def medecin():
+    """Create a test doctor."""
+    return Medecin.objects.create_user(
         username="testuser",
         email="test@example.com",
-        password="testpass123"
+        password="testpass123",
+        adresse="1 rue de test",
+        numero_telephone="0600000000",
+        specialite="Cardiologie",
     )
 
 
 @pytest.fixture
-def medecin(user):
-    """Create a test doctor."""
-    return Medecin.objects.create(
-        user=user,
-        numero_licence="LIC123456",
-        specialite="Cardiologie"
-    )
-
-
-@pytest.fixture
-def authenticated_client(api_client, user):
+def authenticated_client(api_client, medecin):
     """API client with JWT authentication."""
-    refresh = RefreshToken.for_user(user)
+    refresh = RefreshToken.for_user(medecin)
     api_client.credentials(HTTP_AUTHORIZATION=f"Bearer {refresh.access_token}")
     return api_client
 
@@ -53,14 +46,20 @@ def patient(medecin):
         numero_telephone="555-1234",
         adresse_email="john@example.com",
         groupe_sanguin="O+",
-        medecin=medecin
+        medecin=medecin,
     )
+
+
+@pytest.fixture
+def dossier_medical(patient):
+    """Create the medical record for the test patient."""
+    return DossierMedical.objects.create(patient=patient)
 
 
 @pytest.mark.django_db
 class TestPatientAPI:
     """Test patient API endpoints."""
-    
+
     def test_create_patient(self, authenticated_client, medecin):
         """Test creating a new patient."""
         data = {
@@ -71,42 +70,42 @@ class TestPatientAPI:
             "numero_telephone": "555-5678",
             "adresse_email": "jane@example.com",
             "groupe_sanguin": "AB+",
-            "medecin": medecin.id
+            "medecin": medecin.id,
         }
         response = authenticated_client.post("/api/patients/", data, format="json")
         assert response.status_code == 201
         assert response.data["nom"] == "Smith"
-    
+
     def test_list_patients(self, authenticated_client, patient):
         """Test listing patients."""
         response = authenticated_client.get("/api/patients/")
         assert response.status_code == 200
         assert len(response.data["results"]) > 0
-    
+
     def test_retrieve_patient(self, authenticated_client, patient):
         """Test retrieving a specific patient."""
         response = authenticated_client.get(f"/api/patients/{patient.id}/")
         assert response.status_code == 200
         assert response.data["nom"] == patient.nom
-    
+
     def test_update_patient(self, authenticated_client, patient):
         """Test updating a patient."""
         data = {"prenom": "Jonathan"}
         response = authenticated_client.patch(
             f"/api/patients/{patient.id}/",
             data,
-            format="json"
+            format="json",
         )
         assert response.status_code == 200
         assert response.data["prenom"] == "Jonathan"
-    
+
     def test_delete_patient(self, authenticated_client, patient):
         """Test deleting a patient."""
         patient_id = patient.id
         response = authenticated_client.delete(f"/api/patients/{patient_id}/")
         assert response.status_code == 204
         assert not Patient.objects.filter(id=patient_id).exists()
-    
+
     def test_create_patient_missing_required_field(self, authenticated_client):
         """Test creating patient with missing required field."""
         data = {
@@ -115,11 +114,11 @@ class TestPatientAPI:
             "date_naissance": "1990-01-01",
             "adresse": "123 St",
             "numero_telephone": "555-1234",
-            "adresse_email": "test@example.com"
+            "adresse_email": "test@example.com",
         }
         response = authenticated_client.post("/api/patients/", data, format="json")
         assert response.status_code == 400
-    
+
     def test_create_patient_invalid_email(self, authenticated_client, medecin):
         """Test creating patient with invalid email."""
         data = {
@@ -129,7 +128,7 @@ class TestPatientAPI:
             "adresse": "123 St",
             "numero_telephone": "555-1234",
             "adresse_email": "invalid-email",
-            "medecin": medecin.id
+            "medecin": medecin.id,
         }
         response = authenticated_client.post("/api/patients/", data, format="json")
         assert response.status_code == 400
@@ -138,37 +137,43 @@ class TestPatientAPI:
 @pytest.mark.django_db
 class TestConsultationAPI:
     """Test consultation API endpoints."""
-    
-    def test_create_consultation(self, authenticated_client, patient):
+
+    def test_create_consultation(self, authenticated_client, dossier_medical, medecin):
         """Test creating a new consultation."""
         data = {
-            "patient": patient.id,
-            "date": "2024-02-25",
+            "date": "2024-02-25T10:00:00Z",
+            "motif": "Controle",
             "diagnostic": "Hypertension",
             "observations": "Patient complains of high blood pressure",
+            "dossier_medical_id": dossier_medical.patient_id,
+            "medecin_id": medecin.id,
         }
         response = authenticated_client.post("/api/consultations/", data, format="json")
         assert response.status_code == 201
         assert response.data["diagnostic"] == "Hypertension"
-    
-    def test_list_consultations(self, authenticated_client, patient):
+
+    def test_list_consultations(self, authenticated_client, dossier_medical, medecin):
         """Test listing consultations."""
         Consultation.objects.create(
-            patient=patient,
-            date="2024-02-25",
+            dossier_medical=dossier_medical,
+            medecin=medecin,
+            date="2024-02-25T10:00:00Z",
+            motif="Controle",
             diagnostic="Hypertension",
-            observations="Test observation"
+            observations="Test observation",
         )
         response = authenticated_client.get("/api/consultations/")
         assert response.status_code == 200
-    
-    def test_retrieve_consultation(self, authenticated_client, patient):
+
+    def test_retrieve_consultation(self, authenticated_client, dossier_medical, medecin):
         """Test retrieving a specific consultation."""
         consultation = Consultation.objects.create(
-            patient=patient,
-            date="2024-02-25",
+            dossier_medical=dossier_medical,
+            medecin=medecin,
+            date="2024-02-25T10:00:00Z",
+            motif="Controle",
             diagnostic="Diabetes",
-            observations="Blood sugar elevated"
+            observations="Blood sugar elevated",
         )
         response = authenticated_client.get(f"/api/consultations/{consultation.id}/")
         assert response.status_code == 200
@@ -178,28 +183,28 @@ class TestConsultationAPI:
 @pytest.mark.django_db
 class TestAuthentication:
     """Test authentication endpoints."""
-    
+
     def test_unauthenticated_access_denied(self, api_client):
         """Test that unauthenticated requests are denied."""
         response = api_client.get("/api/patients/")
         assert response.status_code == 401
-    
-    def test_token_generation(self, api_client, user):
+
+    def test_token_generation(self, api_client, medecin):
         """Test JWT token generation."""
         data = {
             "username": "testuser",
-            "password": "testpass123"
+            "password": "testpass123",
         }
-        response = api_client.post("/api/token/", data, format="json")
+        response = api_client.post("/api/utilisateurs/login/", data, format="json")
         assert response.status_code == 200
         assert "access" in response.data
         assert "refresh" in response.data
-    
+
     def test_invalid_credentials(self, api_client):
         """Test login with invalid credentials."""
         data = {
             "username": "testuser",
-            "password": "wrongpassword"
+            "password": "wrongpassword",
         }
-        response = api_client.post("/api/token/", data, format="json")
+        response = api_client.post("/api/utilisateurs/login/", data, format="json")
         assert response.status_code == 401

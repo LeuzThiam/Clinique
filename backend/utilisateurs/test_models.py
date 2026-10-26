@@ -18,13 +18,25 @@ class TestUserModel:
         user = User.objects.create_user(
             username='testuser',
             email='test@example.com',
-            password='Secure@1234567'
+            password='Secure@1234567',
+            role='medecin',
+            adresse='1 rue de test',
+            numero_telephone='0600000000',
         )
         assert user.username == 'testuser'
         assert user.email == 'test@example.com'
         assert user.is_active
         assert not user.is_staff
         assert not user.is_superuser
+
+    def test_create_user_without_role_fails(self, db):
+        """Role is mandatory for non-superusers"""
+        with pytest.raises(ValueError):
+            User.objects.create_user(
+                username='norole',
+                email='norole@example.com',
+                password='Secure@1234567',
+            )
 
     def test_create_superuser(self, db):
         """Test creating a superuser"""
@@ -39,7 +51,7 @@ class TestUserModel:
 
     def test_user_string_representation(self, test_user):
         """Test user string representation"""
-        assert str(test_user) == 'testuser'
+        assert test_user.get_role_display() in str(test_user)
 
 
 @pytest.mark.unit
@@ -48,19 +60,19 @@ class TestUserViews:
 
     def test_list_users_authenticated(self, authenticated_client):
         """Test listing users as authenticated user"""
-        url = reverse('user-list')
+        url = reverse('utilisateur-list')
         response = authenticated_client.get(url)
         assert response.status_code in [status.HTTP_200_OK, status.HTTP_401_UNAUTHORIZED]
 
     def test_list_users_unauthenticated(self, api_client):
         """Test listing users as unauthenticated user"""
-        url = reverse('user-list')
+        url = reverse('utilisateur-list')
         response = api_client.get(url)
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_create_user(self, db, api_client):
         """Test creating a new user"""
-        url = reverse('user-list')
+        url = reverse('utilisateur-list')
         data = {
             'username': 'newuser',
             'email': 'newuser@example.com',

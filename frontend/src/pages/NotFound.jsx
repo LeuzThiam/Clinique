@@ -9,10 +9,10 @@ export default function NotFound() {
         <h1 className="display-1 fw-bold text-danger mb-2">404</h1>
         <h2 className="mb-3 fw-semibold">Page non trouvée</h2>
         <p className="text-secondary mb-4">
-          Oups, la page que vous cherchez n'existe pas ou a été déplacée.
+          Oups, la page que vous cherchez n&apos;existe pas ou a été déplacée.
         </p>
         <Link to="/dashboard" className="btn btn-primary">
-          Retour à l'accueil
+          Retour à l&apos;accueil
         </Link>
       </div>
     </div>

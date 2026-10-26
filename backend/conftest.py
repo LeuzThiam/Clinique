@@ -22,9 +22,12 @@ def authenticated_client(db):
     user = User.objects.create_user(
         username='testuser',
         email='testuser@example.com',
-        password='Test@1234567890'
+        password='Test@1234567890',
+        role='medecin',
+        adresse='1 rue de test',
+        numero_telephone='0600000000',
     )
-    
+
     # Generate JWT tokens
     refresh = RefreshToken.for_user(user)
     client.credentials(HTTP_AUTHORIZATION=f'Bearer {str(refresh.access_token)}')
@@ -38,7 +41,10 @@ def test_user(db):
     return User.objects.create_user(
         username='testuser',
         email='testuser@example.com',
-        password='Test@1234567890'
+        password='Test@1234567890',
+        role='medecin',
+        adresse='1 rue de test',
+        numero_telephone='0600000000',
     )
 
 

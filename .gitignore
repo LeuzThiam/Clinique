@@ -32,16 +32,15 @@ ENV/
 .coverage
 .pytest_cache/
 htmlcov/
+coverage.xml
 
 # OS
 *.pyc
 .env.local
 Thumbs.db
 
-# Node (Frontend)
-CliniqueFront/node_modules/
-CliniqueFront/.dist/
-CliniqueFront/.env.local
+# Ancien emplacement du frontend avant la restructuration en monorepo
+CliniqueFront/
 
 # Build
 dist/
